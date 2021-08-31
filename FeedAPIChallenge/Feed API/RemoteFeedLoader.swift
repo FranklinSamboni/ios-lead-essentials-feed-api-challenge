@@ -25,6 +25,8 @@ public final class RemoteFeedLoader: FeedLoader {
 				let json = try? JSONDecoder().decode(Payload.self, from: data)
 				if httpResponse.statusCode != 200 || json == nil {
 					completion(.failure(Error.invalidData))
+				} else if json != nil {
+					completion(.success([]))
 				} else {
 					completion(.failure(Error.connectivity))
 				}
