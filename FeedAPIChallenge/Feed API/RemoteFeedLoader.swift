@@ -25,8 +25,9 @@ public final class RemoteFeedLoader: FeedLoader {
 				let json = try? JSONDecoder().decode(Payload.self, from: data)
 				if httpResponse.statusCode != 200 || json == nil {
 					completion(.failure(Error.invalidData))
-				} else if json != nil {
-					completion(.success([]))
+				} else if let items = json {
+					let feedImages: [FeedImage] = items.images.map { $0.feedImage }
+					completion(.success(feedImages))
 				} else {
 					completion(.failure(Error.connectivity))
 				}
@@ -49,6 +50,13 @@ public final class RemoteFeedLoader: FeedLoader {
 		let description: String?
 		let location: String?
 		let url: URL
+
+		var feedImage: FeedImage {
+			return FeedImage(id: id,
+			                 description: description,
+			                 location: location,
+			                 url: url)
+		}
 
 		enum CodingKeys: String, CodingKey {
 			case id = "image_id"
