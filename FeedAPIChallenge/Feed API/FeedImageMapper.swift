@@ -7,12 +7,16 @@ import Foundation
 class FeedImageMapper {
 	static let HTTP_200 = 200
 
-	static func map(_ data: Data, with httpResponse: HTTPURLResponse) throws -> [FeedImage] {
+	static func map(_ data: Data, from httpResponse: HTTPURLResponse) -> FeedLoader.Result {
 		guard httpResponse.statusCode == HTTP_200 else {
-			throw RemoteFeedLoader.Error.invalidData
+			return .failure(RemoteFeedLoader.Error.invalidData)
 		}
 
-		return try map(data)
+		do {
+			return .success(try map(data))
+		} catch {
+			return .failure(RemoteFeedLoader.Error.invalidData)
+		}
 	}
 
 	static func map(_ data: Data) throws -> [FeedImage] {
