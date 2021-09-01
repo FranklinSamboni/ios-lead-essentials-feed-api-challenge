@@ -5,9 +5,10 @@
 import Foundation
 
 class FeedImageMapper {
+	static let HTTP_200 = 200
 
 	static func map(_ data: Data, with httpResponse: HTTPURLResponse) throws -> [FeedImage] {
-		guard httpResponse.statusCode == 200 else {
+		guard httpResponse.statusCode == HTTP_200 else {
 			throw RemoteFeedLoader.Error.invalidData
 		}
 
@@ -35,9 +36,9 @@ class FeedImageMapper {
 
 		var feedImage: FeedImage {
 			return FeedImage(id: id,
-							 description: description,
-							 location: location,
-							 url: url)
+			                 description: description,
+			                 location: location,
+			                 url: url)
 		}
 
 		enum CodingKeys: String, CodingKey {
