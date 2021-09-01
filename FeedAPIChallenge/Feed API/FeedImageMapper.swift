@@ -5,7 +5,7 @@
 import Foundation
 
 class FeedImageMapper {
-	static let HTTP_200 = 200
+	private static let HTTP_200 = 200
 
 	static func map(_ data: Data, from httpResponse: HTTPURLResponse) -> FeedLoader.Result {
 		guard httpResponse.statusCode == HTTP_200 else {
@@ -19,7 +19,7 @@ class FeedImageMapper {
 		}
 	}
 
-	static func map(_ data: Data) throws -> [FeedImage] {
+	private static func map(_ data: Data) throws -> [FeedImage] {
 		let paylaod = try JSONDecoder().decode(Payload.self, from: data)
 		return paylaod.images.map { $0.feedImage }
 	}
