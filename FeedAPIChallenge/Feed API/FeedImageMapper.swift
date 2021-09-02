@@ -19,7 +19,7 @@ final class FeedImageMapper {
 		guard let payload = try? JSONDecoder().decode(Payload.self, from: data) else {
 			throw RemoteFeedLoader.Error.invalidData
 		}
-		return payload.images.map { $0.feedImage }
+		return payload.images.map(\.feedImage)
 	}
 
 	private struct Payload: Decodable {
