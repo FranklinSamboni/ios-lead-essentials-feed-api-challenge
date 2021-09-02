@@ -15,12 +15,14 @@ class FeedImageMapper {
 		do {
 			return .success(try map(data))
 		} catch {
-			return .failure(RemoteFeedLoader.Error.invalidData)
+			return .failure(error)
 		}
 	}
 
 	private static func map(_ data: Data) throws -> [FeedImage] {
-		let payload = try JSONDecoder().decode(Payload.self, from: data)
+		guard let payload = try? JSONDecoder().decode(Payload.self, from: data) else {
+			throw RemoteFeedLoader.Error.invalidData
+		}
 		return payload.images.map { $0.feedImage }
 	}
 
