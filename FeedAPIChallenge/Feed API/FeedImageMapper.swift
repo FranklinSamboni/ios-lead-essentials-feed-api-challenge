@@ -12,11 +12,7 @@ class FeedImageMapper {
 			return .failure(RemoteFeedLoader.Error.invalidData)
 		}
 
-		do {
-			return .success(try map(data))
-		} catch {
-			return .failure(error)
-		}
+		return Result { try map(data) }
 	}
 
 	private static func map(_ data: Data) throws -> [FeedImage] {
