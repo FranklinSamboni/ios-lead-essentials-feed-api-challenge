@@ -20,8 +20,8 @@ class FeedImageMapper {
 	}
 
 	private static func map(_ data: Data) throws -> [FeedImage] {
-		let paylaod = try JSONDecoder().decode(Payload.self, from: data)
-		return paylaod.images.map { $0.feedImage }
+		let payload = try JSONDecoder().decode(Payload.self, from: data)
+		return payload.images.map { $0.feedImage }
 	}
 
 	private struct Payload: Decodable {
