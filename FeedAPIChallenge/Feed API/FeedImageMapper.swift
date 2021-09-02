@@ -4,7 +4,7 @@
 
 import Foundation
 
-class FeedImageMapper {
+final class FeedImageMapper {
 	private static let HTTP_200 = 200
 
 	static func map(_ data: Data, from httpResponse: HTTPURLResponse) -> FeedLoader.Result {
